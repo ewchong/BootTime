@@ -174,6 +174,13 @@ def get_test_result_list(data, metric):
 
     return unique_keys
 
+def calc_section_stats(section, data, filename):
+    stats = []
+    list = get_test_result_list(data, section)
+    for key in list:
+        stats.append(calc_stats(data,\
+          ["test_results", data, key], filename))
+    return stats
 
 # FUNCTIONS End
 ###############################################################
@@ -224,6 +231,20 @@ def main():
                     dmesg_stats.append(calc_stats(data,\
                       ["test_results", "reboot", "link_is_up"], filename))
                     all_stats['dmesg_stats'] = dmesg_stats
+
+                    initramfs_stats = []
+                    initramfs_list = get_test_result_list(data, "initramfs")
+                    for key3 in initramfs_list:
+                        initramfs_stats.append(calc_stats(data,\
+                          ["test_results", "initramfs", key3], filename))
+                    all_stats['initramfs_stats'] = initramfs_stats
+
+                    dklm_stats = []
+                    dklm_list = get_test_result_list(data, "dklm")
+                    for key3 in dklm_list:
+                        dklm_stats.append(calc_stats(data,\
+                          ["test_results", "dklm", key3], filename))
+                    all_stats['dklm_stats'] = dklm_stats
 
 
                     # Print stats and output to a file if needed
